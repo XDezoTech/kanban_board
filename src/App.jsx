@@ -1,5 +1,5 @@
-export const App = () => {
-  return (
-    <div>App</div>
-  )
+import BoardPage from './pages/BoardPage.jsx';
+
+export default function App() {
+  return <BoardPage />;
 }
