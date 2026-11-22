@@ -1,5 +1,6 @@
 import Navbar from '../components/Navbar.jsx';
-import TaskCard from '../components/TaskCard.jsx';
+import BoardColumn from '../components/BoardColumn.jsx';
+import { DEFAULT_COLUMNS, INITIAL_TASKS } from '../utils/taskHelpers.js';
 
 export default function BoardPage() {
   return (
@@ -12,22 +13,14 @@ export default function BoardPage() {
             <p>Plan, build, and ship the Boardly Kanban experience.</p>
           </div>
         </header>
-
-        <div className="task-card-stack">
-          <TaskCard
-            title="Set up the Vite project"
-            description="Create the React app and confirm the dev server runs."
-            priority="high"
-            dueDate="2026-11-25"
-            assignee="Alex"
-          />
-          <TaskCard
-            title="Sketch the board layout"
-            description="Plan the toolbar and column layout."
-            priority="medium"
-            dueDate=""
-            assignee=""
-          />
+        <div className="board-columns">
+          {DEFAULT_COLUMNS.map(column => (
+            <BoardColumn
+              key={column.id}
+              title={column.title}
+              tasks={INITIAL_TASKS.filter(task => task.status === column.id)}
+            />
+          ))}
         </div>
       </main>
     </div>
