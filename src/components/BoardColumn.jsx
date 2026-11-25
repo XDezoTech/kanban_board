@@ -1,6 +1,6 @@
 import TaskCard from './TaskCard.jsx';
 
-export default function BoardColumn({ title, tasks }) {
+export default function BoardColumn({ title, tasks, onDelete }) {
   return (
     <section className="column">
       <header className="column__header">
@@ -9,14 +9,7 @@ export default function BoardColumn({ title, tasks }) {
       </header>
       <div className="column__list">
         {tasks.map(task => (
-          <TaskCard
-            key={task.id}
-            title={task.title}
-            description={task.description}
-            priority={task.priority}
-            dueDate={task.dueDate}
-            assignee={task.assignee}
-          />
+          <TaskCard key={task.id} task={task} onDelete={onDelete} />
         ))}
       </div>
     </section>
