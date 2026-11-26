@@ -9,13 +9,15 @@ export default function TaskCard({ task, onDelete }) {
         <span className="task-card__assignee">{task.assignee || 'Unassigned'}</span>
       </div>
       <div className="task-card__actions">
-          <button type="button" className="button button--danger" onClick={() => onDelete(task)} >
-          <i class="fa-solid fa-trash" onClick={() => 	onDelete(task)}></i>
-          Delete
-          </button>
-        {/* <button type="button" className="button button--ghost button--tiny" onClick={() => onDelete(task)}>
-          Delete
-        </button> */}
+        <button
+          type="button"
+          className="button button--danger button--icon"
+          onClick={() => onDelete(task)}
+          title="Delete task"
+          aria-label="Delete task"
+        >
+          <i className="fa-solid fa-trash"></i>
+        </button>
       </div>
     </article>
   );

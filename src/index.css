@@ -183,6 +183,19 @@ input, select, textarea {
   cursor: not-allowed;
 }
 
+.task-card__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button--icon {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  font-size: 15px;
+  border-radius: 8px;
+}
+
 
 .modal-overlay {
   position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55);

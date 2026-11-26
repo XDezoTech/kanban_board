@@ -2,14 +2,14 @@ import { useState } from 'react';
 import Modal from './Modal.jsx';
 import { PRIORITIES } from '../utils/taskHelpers.js';
 
-export default function TaskForm({ columns, onSubmit, onClose }) {
+export default function TaskForm({ task, columns, onSubmit, onClose }) {
   const [values, setValues] = useState({
-    title: '',
-    description: '',
-    status: columns[0]?.id || '',
-    priority: 'medium',
-    assignee: '',
-    dueDate: '',
+    title: task?.title || '',
+    description: task?.description || '',
+    status: task?.status || columns[0]?.id || '',
+    priority: task?.priority || 'medium',
+    assignee: task?.assignee || '',
+    dueDate: task?.dueDate || '',
   });
 
   function update(field, value) {
@@ -23,16 +23,11 @@ export default function TaskForm({ columns, onSubmit, onClose }) {
   }
 
   return (
-    <Modal title="Create task" onClose={onClose}>
+    <Modal title={task ? 'Edit task' : 'Create task'} onClose={onClose}>
       <form className="form" onSubmit={handleSubmit} noValidate>
         <div className="field">
           <label htmlFor="task-title">Title</label>
-          <input
-            id="task-title"
-            value={values.title}
-            onChange={e => update('title', e.target.value)}
-            autoComplete="off"
-          />
+          <input id="task-title" value={values.title} onChange={e => update('title', e.target.value)} autoComplete="off" />
         </div>
         <div className="field-row">
           <div className="field">
@@ -64,7 +59,7 @@ export default function TaskForm({ columns, onSubmit, onClose }) {
         </div>
         <div className="form-actions">
           <button type="button" className="button button--ghost" onClick={onClose}>Cancel</button>
-          <button type="submit" className="button button--primary">Create task</button>
+          <button type="submit" className="button button--primary">{task ? 'Save changes' : 'Create task'}</button>
         </div>
       </form>
     </Modal>
