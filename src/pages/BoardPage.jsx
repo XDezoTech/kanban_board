@@ -6,9 +6,15 @@ import ConfirmDialog from '../components/ConfirmDialog.jsx';
 import { useBoard } from '../context/BoardContext.jsx';
 
 export default function BoardPage() {
-  const { board, sortedColumns, addTask, deleteTask } = useBoard();
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const { board, sortedColumns, addTask, updateTask, deleteTask } = useBoard();
+  const [taskForm, setTaskForm] = useState(null); // null | { task? }
   const [taskToDelete, setTaskToDelete] = useState(null);
+
+  function handleSubmit(values) {
+    if (taskForm?.task) updateTask(taskForm.task.id, values);
+    else addTask(values);
+    setTaskForm(null);
+  }
 
   return (
     <div className="app">
@@ -19,7 +25,7 @@ export default function BoardPage() {
             <h1>{board.title}</h1>
             <p>{board.description}</p>
           </div>
-          <button type="button" className="button button--primary" onClick={() => setIsFormOpen(true)}>
+          <button type="button" className="button button--primary" onClick={() => setTaskForm({})}>
             + New task
           </button>
         </header>
@@ -29,13 +35,20 @@ export default function BoardPage() {
               key={column.id}
               title={column.title}
               tasks={board.tasks.filter(task => task.status === column.id)}
+              onEdit={task => setTaskForm({ task })}
               onDelete={setTaskToDelete}
             />
           ))}
         </div>
       </main>
-      {isFormOpen ? (
-        <TaskForm columns={sortedColumns} onSubmit={v => { addTask(v); setIsFormOpen(false); }} onClose={() => setIsFormOpen(false)} />
+      {taskForm ? (
+        <TaskForm
+          key={taskForm.task?.id || 'new'}
+          task={taskForm.task}
+          columns={sortedColumns}
+          onSubmit={handleSubmit}
+          onClose={() => setTaskForm(null)}
+        />
       ) : null}
       {taskToDelete ? (
         <ConfirmDialog
